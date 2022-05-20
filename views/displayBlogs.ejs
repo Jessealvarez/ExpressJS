@@ -8,7 +8,7 @@
         $("#getBlogs").click(function () {
           $.get("http://localhost:4000/blogs/all", function (blogs) {
             blogs.forEach((blog) => {
-              $("#blogList").append("<li>" + blog.title + "<br>" + blog.author + "<br>" + "</li>");
+              $("#blogList").append("<li>" + blog.title + "<br>" + blog.author + "<br>" + blog.text +"<br>" + "</li>");
 
               
             });

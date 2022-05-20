@@ -14,9 +14,6 @@ router.get('/all', function(req, res, next) { //***needs review to get desc comm
     const sortOrder = req.query.sort;
 
     res.json(sortBlogs(sortOrder));
-    
-   
-
 })
 
 router.get('/singleBlog/:blogId', function(req, res, next) {
@@ -33,13 +30,9 @@ router.get('/postblog', function(req, res, next) {
 })
 
 router.get('/displayBlogs', function(req, res){
+    
     res.render('displayBlogs')
-})
-//* Create a new GET route /blogs/displayBlogs that will render the displayBlogs 
-//page to the browser. Test that the basic functionality of the page is working by 
-//clicking the Get Blogs button, your various blog titles should appear in a list. 
-//Test that your postBlog page is still working by adding a new blog then go back 
-//to displayBlogs and click Get Blogs again. Your new blog title should appear on the page.
+});
 
 router.post('/submit', function (req, res, next){
     const newBlog ={
@@ -50,10 +43,33 @@ router.post('/submit', function (req, res, next){
         id: String(blogPosts.length + 1)
     }
     blogPosts.push(newBlog)
-    console.log("test to see if this worked:", blogs.blogPosts)
+   // console.log("test to see if this worked:", blogs.blogPosts)
 
     res.send("OK");
 })
+
+router.get('/displaysingleblog', function(req, res, next){
+    res.render('displaysingleblog')
+});
+
+
+router.delete('/deleteSingleBlog/:blogId', function (req,res,next){
+    const blogDelete = req.params.blogId;
+    
+    console.log("testing")
+    for (let i = 0; i < blogPosts.length; i++){
+        let blog = blogPosts[i];
+        if (blog.id === blogDelete){
+            // console.log(blog)
+            blogPosts.splice(i,1);
+        }
+    }
+     console.log(blogPosts)
+    res.send("Blog deleted.");
+})
+
+
+module.exports = router;
 //helper functions
 
 const findBlogId = (blogId) => {
@@ -75,4 +91,3 @@ let sortBlogs = (order) => {
     }
 };
 
-module.exports = router;
