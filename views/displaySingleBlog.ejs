@@ -32,6 +32,7 @@ jQuery.each( [ "put", "delete" ], function( i, method ) {
           $.get(
             "http://localhost:4000/blogs/singleBlog/" + blogId,
             function (blog) {
+                $("#blogId").html(blog.id)
                 $("#blogTitle").html(blog.title)
                 $("#blogAuthor").html(blog.author)
                 $("#blogText").html(blog.text)
@@ -40,9 +41,14 @@ jQuery.each( [ "put", "delete" ], function( i, method ) {
         });
         $("#deleteSingleBlog").click(function () {
             blogId = $("#blogId").val();
-            console.log("delete blog")
+            console.log("delete blog" + blogId )
 
-            $.delete("http://localhost:4000/blogs/deleteSingleBlog/" + blogId)
+            $.delete("http://localhost:4000/blogs/deleteBlog/" + blogId, function (data) {
+              $("blogId").html('')
+              $("#blogTitle").html('')
+              $("#blogAuthor").html('')
+              $("#blogText").html(data)
+            })
         })  
       });
     </script>
@@ -56,15 +62,13 @@ jQuery.each( [ "put", "delete" ], function( i, method ) {
     <button id="getSingleBlog">Get Single Blog</button>
     <button id="deleteSingleBlog">Delete Single Blog</button>
     <div>
+        <p id="blogId"></p>
         <p id="blogTitle"></p>
         <p id="blogAuthor"></p>
         <p id="blogText"></p>
     </div>
   </body>
 </html>
-white_check_mark
-eyes
-raised_hands
 
 
 
